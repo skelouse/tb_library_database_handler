@@ -5,6 +5,15 @@ import (
 )
 
 func _delete(h httpEvent.Event) error {
-	_, err := h.Write([]byte("do delete"))
-	return err
+	db, err := open()
+	if err != nil {
+		return err
+	}
+
+	key, err := queryKey(h)
+	if err != nil {
+		return err
+	}
+
+	return db.Delete(key)
 }

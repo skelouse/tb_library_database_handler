@@ -2,10 +2,14 @@ module function
 
 go 1.19
 
-require github.com/taubyte/go-sdk v0.3.5
+require (
+	github.com/mailru/easyjson v0.7.7
+	github.com/taubyte/go-sdk v0.3.5
+)
 
 require (
 	github.com/ipfs/go-cid v0.0.7 // indirect
+	github.com/josharian/intern v1.0.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.12 // indirect
 	github.com/minio/blake2b-simd v0.0.0-20160723061019-3f5f724cb5b1 // indirect
 	github.com/minio/sha256-simd v1.0.0 // indirect

@@ -5,6 +5,20 @@ import (
 )
 
 func _set(h httpEvent.Event) error {
-	_, err := h.Write([]byte("do set"))
-	return err
+	db, err := open()
+	if err != nil {
+		return err
+	}
+
+	key, err := queryKey(h)
+	if err != nil {
+		return err
+	}
+
+	value, err := bodyValue(h)
+	if err != nil {
+		return err
+	}
+
+	return db.Put(key, value)
 }

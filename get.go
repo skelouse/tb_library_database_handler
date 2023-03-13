@@ -5,6 +5,21 @@ import (
 )
 
 func _get(h httpEvent.Event) error {
-	_, err := h.Write([]byte("do get"))
+	db, err := open()
+	if err != nil {
+		return err
+	}
+
+	key, err := queryKey(h)
+	if err != nil {
+		return err
+	}
+
+	value, err := db.Get(key)
+	if err != nil {
+		return err
+	}
+
+	_, err = h.Write(value)
 	return err
 }
