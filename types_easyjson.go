@@ -36,7 +36,7 @@ func easyjson6601e8cdDecodeFunction(in *jlexer.Lexer, out *BodyValue) {
 			continue
 		}
 		switch key {
-		case "Value":
+		case "value":
 			out.Value = string(in.String())
 		default:
 			in.SkipRecursive()
@@ -53,7 +53,7 @@ func easyjson6601e8cdEncodeFunction(out *jwriter.Writer, in BodyValue) {
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"Value\":"
+		const prefix string = ",\"value\":"
 		out.RawString(prefix[1:])
 		out.String(string(in.Value))
 	}
