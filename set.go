@@ -2,31 +2,40 @@ package lib
 
 import (
 	"fmt"
+	"io"
 
+	"github.com/taubyte/go-sdk/database"
 	httpEvent "github.com/taubyte/go-sdk/http/event"
 )
 
 func _set(h httpEvent.Event) error {
-	db, err := open()
+	db, err := database.New(databaseMatch)
 	if err != nil {
 		return err
 	}
 
-	key, err := queryKey(h)
+	key, err := h.Query().Get("key")
 	if err != nil {
 		return err
 	}
 
-	value, err := bodyValue(h)
+	defer h.Body().Close()
+	data, err := io.ReadAll(h.Body())
 	if err != nil {
 		return err
 	}
 
-	err = db.Put(key, value)
+	var value BodyValue
+	err = value.UnmarshalJSON(data)
 	if err != nil {
 		return err
 	}
 
-	_, err = h.Write([]byte(fmt.Sprintf("put into key `%s`: %s", key, string(value))))
+	err = db.Put(key, value.Value)
+	if err != nil {
+		return err
+	}
+
+	_, err = h.Write([]byte(fmt.Sprintf("put into key `%s`: %s", key, string(value.Value))))
 	return err
 }
