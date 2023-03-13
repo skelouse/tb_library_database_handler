@@ -25,8 +25,6 @@ func _set(h httpEvent.Event) error {
 		return err
 	}
 
-	fmt.Println("DATA", string(data))
-
 	var value BodyValue
 	err = value.UnmarshalJSON(data)
 	if err != nil {
