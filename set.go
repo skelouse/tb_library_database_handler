@@ -1,6 +1,8 @@
 package lib
 
 import (
+	"fmt"
+
 	httpEvent "github.com/taubyte/go-sdk/http/event"
 )
 
@@ -20,5 +22,11 @@ func _set(h httpEvent.Event) error {
 		return err
 	}
 
-	return db.Put(key, value)
+	err = db.Put(key, value)
+	if err != nil {
+		return err
+	}
+
+	_, err = h.Write([]byte(fmt.Sprintf("put into key `%s`: %s", key, string(value))))
+	return err
 }
