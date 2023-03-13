@@ -31,11 +31,11 @@ func _set(h httpEvent.Event) error {
 		return err
 	}
 
-	err = db.Put(key, value.Value)
+	err = db.Put(key, []byte(value.Value))
 	if err != nil {
 		return err
 	}
 
-	_, err = h.Write([]byte(fmt.Sprintf("put into key `%s`: %s", key, string(value.Value))))
+	_, err = h.Write([]byte(fmt.Sprintf("put into key `%s`: %s", key, value.Value)))
 	return err
 }

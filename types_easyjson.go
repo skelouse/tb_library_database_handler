@@ -37,12 +37,7 @@ func easyjson6601e8cdDecodeFunction(in *jlexer.Lexer, out *BodyValue) {
 		}
 		switch key {
 		case "Value":
-			if in.IsNull() {
-				in.Skip()
-				out.Value = nil
-			} else {
-				out.Value = in.Bytes()
-			}
+			out.Value = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -60,7 +55,7 @@ func easyjson6601e8cdEncodeFunction(out *jwriter.Writer, in BodyValue) {
 	{
 		const prefix string = ",\"Value\":"
 		out.RawString(prefix[1:])
-		out.Base64Bytes(in.Value)
+		out.String(string(in.Value))
 	}
 	out.RawByte('}')
 }

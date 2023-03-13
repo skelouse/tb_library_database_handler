@@ -6,5 +6,5 @@ package lib
 
 // Used only for un-marshalling the event body onto
 type BodyValue struct {
-	Value []byte
+	Value string
 }
